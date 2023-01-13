@@ -12,7 +12,8 @@ import java.util.Map;
 import webserver.Paths;
 
 public class Response {
-    private Logger logger;
+
+    private static final Logger logger = LoggerFactory.getLogger(Response.class);
 
     public static final String VERSION = "version";
     public static final String CODE = "code";
@@ -27,10 +28,9 @@ public class Response {
     private String statusText;
 
 
-    public Response(Logger logger)
+    public Response()
     {
         resLine = new HashMap<String, String>();
-        this.logger = logger;
     }
 
     public void sendResponse(OutputStream out, String contentType) throws IOException {
@@ -91,7 +91,6 @@ public class Response {
     {
         resLine.put(VERSION, reqLine.get(Request.REQLINE_VERSION));
 
-        logger.debug("reqQurery ===== " + reqLine.get(Request.REQLINE_QUERY));
         if(isSignUp(reqLine.get(Request.REQLINE_QUERY)))
         {
             resLine.put(CODE, "302");
