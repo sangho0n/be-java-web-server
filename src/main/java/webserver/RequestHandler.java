@@ -16,6 +16,7 @@ public class RequestHandler implements Runnable {
     private static final Logger logger = LoggerFactory.getLogger(RequestHandler.class);
 
     private Request req;
+    private RequestParser reqParser;
 
     private Socket connection;
 
@@ -30,7 +31,8 @@ public class RequestHandler implements Runnable {
 
         try (InputStream in = connection.getInputStream(); OutputStream out = connection.getOutputStream()) {
 
-            req = RequestParser.parseRequestFromInputStream(in); // parse to reqline, header, body
+            reqParser = new RequestParser();
+            req = reqParser.parseRequestFromInputStream(in); // parse to reqline, header, body
             String reqQuery = req.getReqLine().get(Request.REQLINE_QUERY);
 
             Response res = new Response(logger);
