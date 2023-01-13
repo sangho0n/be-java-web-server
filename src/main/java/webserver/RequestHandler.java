@@ -6,6 +6,7 @@ import org.slf4j.LoggerFactory;
 import webserver.httpUtils.Request;
 import webserver.httpUtils.RequestParser;
 import webserver.httpUtils.Response;
+import webserver.httpUtils.ResponseHandler;
 
 import java.io.*;
 import java.net.Socket;
@@ -36,6 +37,7 @@ public class RequestHandler implements Runnable {
             String reqQuery = req.getReqLine().get(Request.REQLINE_QUERY);
 
             Response res = new Response();
+            ResponseHandler resHandle = new ResponseHandler(new Response());
             if(reqQuery.contains("/create") &&
                req.getReqLine().get(Request.REQLINE_METHOD).equals("GET"))
             {
@@ -45,9 +47,9 @@ public class RequestHandler implements Runnable {
                                 SignUpController.enrollNewUser(reqQuery));
             }
             // reqLine을 통해 어떤 resLine을 만들지 추론
-            res.probeResLine(req.getReqLine());
+            resHandle.probeResLine(req.getReqLine());
 
-            res.sendResponse(out, req.getReqLine().get(Request.REQLINE_QUERY));
+            resHandle.sendResponse(out, req.getReqLine().get(Request.REQLINE_QUERY));
         } catch (IOException e) {
             logger.error(e.getMessage());
         }
