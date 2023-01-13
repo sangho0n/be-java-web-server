@@ -10,7 +10,6 @@ import webserver.httpUtils.ResponseHandler;
 
 import java.io.*;
 import java.net.Socket;
-import java.util.Map;
 
 
 public class RequestHandler implements Runnable {
@@ -36,7 +35,6 @@ public class RequestHandler implements Runnable {
             req = reqParser.parseRequestFromInputStream(in); // parse to reqline, header, body
             String reqQuery = req.getReqLine().get(Request.REQLINE_QUERY);
 
-            Response res = new Response();
             ResponseHandler resHandle = new ResponseHandler(new Response());
             if(reqQuery.contains("/create") &&
                req.getReqLine().get(Request.REQLINE_METHOD).equals("GET"))
@@ -44,7 +42,7 @@ public class RequestHandler implements Runnable {
                 // GET 방식의 회원가입 처리
                 req.getReqLine()
                         .put(Request.REQLINE_QUERY,
-                                SignUpController.enrollNewUser(reqQuery));
+                             SignUpController.enrollNewUser(reqQuery));
             }
             // reqLine을 통해 어떤 resLine을 만들지 추론
             resHandle.probeResLine(req.getReqLine());

@@ -20,10 +20,10 @@ public class ResponseHandler {
         this.res = res;
     }
 
-    public void sendResponse(OutputStream out, String contentType) throws IOException {
+    public void sendResponse(OutputStream out, String reqQuery) throws IOException {
         DataOutputStream dos = new DataOutputStream(out);
 
-        responseHeader(dos, contentType);
+        responseHeader(dos, reqQuery);
         responseBody(dos, res.getResBody());
     }
 
