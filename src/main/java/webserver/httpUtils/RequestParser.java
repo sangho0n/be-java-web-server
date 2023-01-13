@@ -25,14 +25,14 @@ public class RequestParser {
         currentLine = br.readLine();
 
         Request req = new Request();
-        req.setReqLine(parseRequestLine(currentLine)); currentLine = br.readLine();
-        req.setReqHeader(getHeaderKeyValues(currentLine, br));
-        //req.setReqBody(getBody(currentLine, br)); ?? 이거 넣으면 왜 안댐?
+        req.setReqLine(parseRequestLine()); currentLine = br.readLine();
+        req.setReqHeader(getHeaderKeyValues(br));
+        //req.setReqBody(getBody(br)); ?? 이거 넣으면 왜 안댐?
 
         return req;
     }
 
-    private Map<String, String> parseRequestLine(String currentLine)
+    private Map<String, String> parseRequestLine()
     {
         Map<String, String> parsedRequestLine = new HashMap<String, String>();
 
@@ -46,7 +46,7 @@ public class RequestParser {
         return parsedRequestLine;
     }
 
-    private Map<String, String> getHeaderKeyValues(String currentLine, BufferedReader br) throws IOException{
+    private Map<String, String> getHeaderKeyValues(BufferedReader br) throws IOException{
         Map<String, String> ret = new HashMap<String, String>();
 
         while(!currentLine.isBlank())
@@ -59,12 +59,12 @@ public class RequestParser {
         return ret;
     }
 
-    private List<String> getBody(String currLine, BufferedReader br) throws IOException {
+    private List<String> getBody(BufferedReader br) throws IOException {
         List<String> ret = new ArrayList<String>();
-        while(!currLine.isBlank())
+        while(!currentLine.isBlank())
         {
-            ret.add(currLine);
-            currLine = br.readLine();
+            ret.add(currentLine);
+            currentLine = br.readLine();
         }
         return ret;
     }
