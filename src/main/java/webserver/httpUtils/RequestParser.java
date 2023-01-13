@@ -27,7 +27,7 @@ public class RequestParser {
         Request req = new Request();
         req.setReqLine(parseRequestLine()); currentLine = br.readLine();
         req.setReqHeader(getHeaderKeyValues(br));
-        //req.setReqBody(getBody(br)); ?? 이거 넣으면 왜 안댐?
+        // req.setReqBody(getBody(br)); NPE 때문에 안되는 듯?
 
         return req;
     }
@@ -61,10 +61,9 @@ public class RequestParser {
 
     private List<String> getBody(BufferedReader br) throws IOException {
         List<String> ret = new ArrayList<String>();
-        while(!currentLine.isBlank())
+        while((currentLine=br.readLine()) != null)
         {
             ret.add(currentLine);
-            currentLine = br.readLine();
         }
         return ret;
     }
