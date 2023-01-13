@@ -91,6 +91,7 @@ public class Response {
     {
         resLine.put(VERSION, reqLine.get(Request.REQLINE_VERSION));
 
+        logger.debug("reqQurery ===== " + reqLine.get(Request.REQLINE_QUERY));
         if(isSignUp(reqLine.get(Request.REQLINE_QUERY)))
         {
             resLine.put(CODE, "302");

@@ -40,20 +40,14 @@ public class RequestHandler implements Runnable {
                     req.getReqLine().get(Request.REQLINE_METHOD).equals("GET"))
             {
                 // GET 방식의 회원가입 처리
-                SignUpController.enrollNewUser(reqQuery);
+                req.getReqLine().put(Request.REQLINE_QUERY, SignUpController.enrollNewUser(reqQuery));
             }
             // reqLine을 통해 어떤 resLine을 만들지 추론
             res.probeResLine(req.getReqLine());
 
-            res.sendResponse(out, reqQuery);
+            res.sendResponse(out, req.getReqLine().get(Request.REQLINE_QUERY));
         } catch (IOException e) {
             logger.error(e.getMessage());
-        } catch (AlreadyHasSameIdException e)
-        {
-            logger.error(e.getMessage());
-            // alert
-
-            // redirect to form.html
         }
     }
 }
